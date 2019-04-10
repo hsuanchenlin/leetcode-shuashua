@@ -49,25 +49,55 @@
  * 
  * 
  */
+type alphabetical [][]int
+
+func (s alphabetical) Len() int {
+	return len(s)
+}
+
+func (s alphabetical) Swap(i, j int){
+	 s[i], s[j] = s[j], s[i]
+}
+func (s alphabetical) Less(i, j int) bool {
+	if len(s[i]) != len(s[j]){
+    	return len(s[i]) < len(s[j])
+	} else {
+		for k:=0;k<len(s[i]);k++{
+			if s[i][k] != s[j][k]{
+				return s[i][j] < s[j][k] 
+			}
+		}
+		return len(s[i]) < len(s[j]) 
+	}
+}
+
 func combinationSum2(candidates []int, target int) [][]int {
-	var ans [][]int
-	var tmp []int
-	// ans := make([][]int, len(candidates))
-	// tmp := make([]int, len(candidates))
-	helper(candidates, target, tmp, ans)
+	sort.Ints(candidates)
+	ans :=  [][]int {}
+	tmp := []int{}
+	helper(candidates, target, tmp, &ans)
+	// sort.Sort(alphabetical(ans))
 	return ans
 }
-func helper(candidates []int, target int, tmp []int, ans [][]int){
+func helper(candidates []int, target int, tmp []int, ans *[][]int){
 	if target == 0 {
-		ans = append(ans,tmp)
+		*ans = append(*ans,tmp)
 		return 
 	}
-	for i := 0;i < len(candidates); i++{
-		if candidates[i] < target {
-			newCandidate := []int {}
-			newCandidate = append(candidates[:i], candidates[i+1:]...)
-			helper(newCandidate, target-candidates[i], append(tmp, candidates[i]), ans)
+	if candidates[0] > target || len(candidates) == 0 {
+		return 
+	}
+	helper(candidates[1:], target-candidates[0], append(tmp, candidates[0]), ans)
+	helper(next(candidates), target, tmp, ans)
+}
+
+
+func next(candidates []int) []int {
+	for i:=1;i<len(candidates);i++{
+		if candidates[i] != candidates[0] {
+			return candidates[i:] 
 		}
 	}
+	return candidates
 }
 

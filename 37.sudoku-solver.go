@@ -42,19 +42,12 @@
  */
 func solveSudoku(board [][]byte)  {
 	cnt := 0
-	
 	solve(board, cnt)
 }
 func solve(board [][]byte, cnt int) bool{
 	if cnt == 81 {
 		return true
 	}
-	// for i:=0;i<9;i++{
-	// 	if !isRowValid() && !isColValid() && !isSqValid() {
-	// 		return 
-	// 	}	
-	// }
-	// solve()
 	
 	r, c := cnt/9, cnt%9
 	if board[r][c] != '.'{
