@@ -27,6 +27,38 @@
  * 
  */
 func trap(height []int) int {
-    
+	length := len(height)
+	if length < 2 {
+		return 0
+	}
+	left := make([]int, length)
+	right := make([]int, length)
+	
+	left[0] = height[0]
+	right[length-1] = height[length-1]
+	for i:=1;i<length;i++{
+		left[i] = max(left[i-1], height[i])
+		right[length-i-1] = max(right[length-i], height[length-i-1])
+	}
+	ans := 0
+	for i:=0;i<length;i++ {
+		ans += min(left[i], right[i]) - height[i]
+	}
+	return ans
 }
 
+func max(a, b int) int {
+	if a > b {
+		return a
+	} else {
+		return b
+	}
+}
+
+func min(a, b int) int {
+	if a < b {
+		return a
+	} else {
+		return b
+	}
+}
