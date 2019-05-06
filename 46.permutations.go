@@ -30,12 +30,8 @@
  * 
  */
  func permute(nums []int) [][]int {
-	// vector 是一组可能的解答
-	// tmp := make([]int, n)
 	var tmp []int
 	var ans [][]int
-
-	// makePermutation()
 	backtrack(&ans, tmp, nums)
 	return ans
 }
